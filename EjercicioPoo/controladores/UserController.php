@@ -52,4 +52,10 @@ class UserController
 
     }
 
+    public function deleteUser(string $id)
+    {
+
+        $this->usuarioDao->deleteUser($id);
+
+    }
 }

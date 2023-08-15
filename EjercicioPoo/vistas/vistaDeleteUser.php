@@ -6,21 +6,25 @@ $controlador = new UserController();
 
 $usuarios = $controlador->verUsuarios();
 
-if(!empty($_POST['id']) && !empty($_POST['nombreUpdate']) && !empty($_POST['telefonoUpdate'])){
+$usuarioAEliminar = "";
+
+if(!empty($_POST['id']) && $_POST['id'] != "null"){
 
     $id = $_POST['id'];
-    $nombre = $_POST['nombreUpdate'];
-    $telefono = $_POST['telefonoUpdate'];
 
-    if($id == "null")
-    {
-        echo "<h2 style='color: red; text-align: center'>Por favor ingrese el usuario</h2>";
+    $usuarioAEliminar = $controlador->verUsuario($id) ?? "";
+
+    if (isset($_POST['confirmar'])) {
+
+        $controlador->deleteUser($id);
+        echo "<h2 style='color: green; text-align: center'>Usuario eliminado con éxito</h2>";
+        $usuarioAEliminar = "";
     }
-    else
-    {
-        $controlador->updateUser($id, $nombre, $telefono);
-        echo "<h2 style='color: green; text-align: center'>Usuario actualizado con éxito</h2>";
-    }
+
+}
+else{
+
+    echo "<h2 style='color: red; text-align: center'>Por favor ingrese el usuario</h2>";
 
 }
 ?>
@@ -30,7 +34,7 @@ if(!empty($_POST['id']) && !empty($_POST['nombreUpdate']) && !empty($_POST['tele
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Actualizar usuario</title>
+    <title>Eliminar Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
@@ -54,17 +58,20 @@ if(!empty($_POST['id']) && !empty($_POST['nombreUpdate']) && !empty($_POST['tele
         </select>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">nombre</label>
-        <input type="text"  class="form-control" name="nombreUpdate">
-    </div>
+    <?php if ($usuarioAEliminar != "") : ?>
+        <div class="mb-3">
+            <label for="confirmar" class="form-label">¿Está seguro de eliminar a <?= $usuarioAEliminar->getNombre() ?>?</label>
+            <br>
+            <input type="hidden" name="id" value="<?= $usuarioAEliminar->getId() ?>">
+            <button type="submit" name="confirmar" class="btn btn-danger">Confirmar Eliminación</button>
+            <a href="vistaDeleteUser.php" class="btn btn-secondary" id="cancel-button">Cancelar</a>
+        </div>
+    <?php endif; ?>
 
-    <div class="mb-3">
-        <label class="form-label">telefono</label>
-        <input type="text"  class="form-control" name="telefonoUpdate">
-    </div>
+    <?php if ($usuarioAEliminar == "") : ?>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+    <?php endif; ?>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 

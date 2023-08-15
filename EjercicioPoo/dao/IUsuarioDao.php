@@ -10,5 +10,6 @@ interface IUsuarioDao
     public function verUsuarios(): ?array;
     public function verUsuario(string $id): ?User;
     public function updateUser(User $usuario);
+    public function deleteUser(string $id);
 
 }

@@ -91,26 +91,41 @@ class UsuarioDao extends Conexion implements IUsuarioDao
 
     public function updateUser(User $usuario)
     {
-        {
 
-            $data = [
-                'nombre' => $usuario->getNombre() ?? null,
-                'telefono' => $usuario->getTelefono() ?? null
-            ];
+        $data = [
+            'nombre' => $usuario->getNombre() ?? null,
+            'telefono' => $usuario->getTelefono() ?? null
+        ];
 
-            try {
+        try {
 
-                $coleccion = $this->getConexion("Usuario");
-                $coleccion->updateOne(['_id'=> new ObjectID($usuario->getId())], ['$set' => $data]);
-
-            }
-            catch (Exception $error){
-
-                echo "Ha ocurrido un error: $error";
-
-            }
+            $coleccion = $this->getConexion("Usuario");
+            $coleccion->updateOne(['_id'=> new ObjectID($usuario->getId())], ['$set' => $data]);
 
         }
+        catch (Exception $error){
+
+            echo "Ha ocurrido un error: $error";
+
+        }
+
+    }
+
+    public function deleteUser(string $id)
+    {
+
+        try {
+
+            $coleccion = $this->getConexion("Usuario");
+            $coleccion->deleteOne(['_id'=> new ObjectID($id)]);
+
+        }
+        catch (Exception $error){
+
+            echo "Ha ocurrido un error: $error";
+
+        }
+
     }
 
 }
