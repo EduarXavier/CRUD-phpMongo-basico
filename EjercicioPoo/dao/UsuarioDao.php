@@ -2,6 +2,7 @@
 require_once("../dao/Conexion.php");
 
 use \modelos\User;
+use MongoDB\BSON\ObjectID;
 
 class UsuarioDao extends Conexion implements IUsuarioDao
 {
@@ -62,8 +63,54 @@ class UsuarioDao extends Conexion implements IUsuarioDao
         return null;
     }
 
-    public function verUsuario(int $id): ?int
+    public function verUsuario(string $id): ?User
     {
+        try
+        {
+
+            $coleccion = $this->getConexion("Usuario");
+            $resultado = $coleccion->findOne(['_id' => new ObjectID($id)]);
+
+            $usuario = new User();
+            $usuario->setId($resultado['_id'] ?? null);
+            $usuario->setNombre($resultado['nombre'] ?? null);
+            $usuario->setTelefono($resultado['telefono'] ?? null);
+
+            return $usuario;
+
+        }
+        catch (Exception $error)
+        {
+
+            echo "Ha ocurrido un error: $error";
+
+        }
+
         return null;
     }
+
+    public function updateUser(User $usuario)
+    {
+        {
+
+            $data = [
+                'nombre' => $usuario->getNombre() ?? null,
+                'telefono' => $usuario->getTelefono() ?? null
+            ];
+
+            try {
+
+                $coleccion = $this->getConexion("Usuario");
+                $coleccion->updateOne(['_id'=> new ObjectID($usuario->getId())], ['$set' => $data]);
+
+            }
+            catch (Exception $error){
+
+                echo "Ha ocurrido un error: $error";
+
+            }
+
+        }
+    }
+
 }

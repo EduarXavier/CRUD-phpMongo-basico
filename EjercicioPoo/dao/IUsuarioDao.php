@@ -8,6 +8,7 @@ interface IUsuarioDao
 
     public function addUser(User $usuario): ?bool;
     public function verUsuarios(): ?array;
-    public function verUsuario(int $id): ?int;
+    public function verUsuario(string $id): ?User;
+    public function updateUser(User $usuario);
 
 }

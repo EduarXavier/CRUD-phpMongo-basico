@@ -25,11 +25,31 @@ class UserController
         return $respuesta;
     }
 
-    public function verUsuario() : ?array
+    public function verUsuarios() : ?array
     {
         $usuarios = $this->usuarioDao?->verUsuarios();
 
         return $usuarios ?? null;
 
     }
+
+    public function verUsuario(string $id) : ?User
+    {
+        $usuario = $this->usuarioDao?->verUsuario($id);
+
+        return $usuario ?? null;
+
+    }
+
+    public  function updateUser(String $id, string $nombre, string $telefono){
+
+        $user = new User();
+        $user->setId($id);
+        $user->setNombre($nombre);
+        $user->setTelefono($telefono);
+
+        $this->usuarioDao->updateUser($user);
+
+    }
+
 }

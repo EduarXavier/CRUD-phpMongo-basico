@@ -25,17 +25,21 @@
 
         $controlador = new UserController();
 
-        $usuarios = $controlador->verUsuario();
+        $usuarios = $controlador->verUsuarios();
 
         foreach ($usuarios as $usuario):
         ?>
         <tr>
-            <td><?php echo $usuario->getId() ? $usuario->getId() : "" ?></td>
+
+            <td>
+                <?php echo $usuario->getId() ?
+                    "<a href='vistaUserDetails.php?user=".$usuario->getId()."'>".$usuario->getId()."</a>"
+                    : "" ;
+                ?>
+            </td>
             <td><?php echo $usuario->getNombre() ? $usuario->getNombre() : "" ?></td>
             <td><?php echo $usuario->getTelefono() ? $usuario->getTelefono() : "No tiene" ?></td>
-
         </tr>
-
         <?php endforeach;?>
 
 
