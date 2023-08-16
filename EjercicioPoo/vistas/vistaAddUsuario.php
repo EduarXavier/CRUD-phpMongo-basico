@@ -1,14 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Usuarios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
-<body>
-
 <?php
+
+$nombrePagina = "Añadir usuario";
+include_once("../layouts/header.php");
 
 require_once("../controladores/UserController.php");
 require_once("../modelos/User.php");
@@ -26,10 +19,11 @@ if(!empty($_POST['nombre']) && !empty($_POST['telefono']))
         :
         "<h2 style='text-align: center; color: Red'>Ha ocurrido un error</h2>";
 }
-else
+else if(!empty($_POST['nombre']) || !empty($_POST['telefono']))
 {
     echo "<h2 style='text-align: center; color: Red'>Ingrese todos los datos</h2>";
 }
+
 ?>
 
 <form action="#" method="post">

@@ -1,4 +1,7 @@
 <?php
+$nombrePagina = "Actualizar usuario";
+include_once("../layouts/header.php");
+
 require_once("../controladores/UserController.php");
 require_once("../modelos/User.php");
 
@@ -19,21 +22,14 @@ if(!empty($_POST['id']) && !empty($_POST['nombreUpdate']) && !empty($_POST['tele
     else
     {
         $controlador->updateUser($id, $nombre, $telefono);
+        header("Location: $_SERVER[PHP_SELF]");
+        exit;
         echo "<h2 style='color: green; text-align: center'>Usuario actualizado con éxito</h2>";
     }
 
 }
-?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Actualizar usuario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
-<body>
+?>
 
 <form action="#" method="post" style="width: 50%; margin-left: 25%; margin-top: 12%">
 
@@ -68,7 +64,8 @@ if(!empty($_POST['id']) && !empty($_POST['nombreUpdate']) && !empty($_POST['tele
 </form>
 
 
+<?php
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-</body>
-</html>
+    include_once("../layouts/footer.php");
+
+?>

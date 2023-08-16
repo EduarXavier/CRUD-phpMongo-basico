@@ -12,7 +12,7 @@ class Conexion
         try
         {
 
-            $clienteMongo = new Client("mongodb://localhost:27017");
+            $clienteMongo = new Client("mongodb://localhost:27017/");
             $baseDatos = $clienteMongo->selectDatabase('pruebaMongo');
 
             return $baseDatos?->selectCollection($coleccion) ?? throw new Exception("Debe ingresar una colección");
